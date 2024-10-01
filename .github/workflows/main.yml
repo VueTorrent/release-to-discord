@@ -1,0 +1,20 @@
+name: 'Test job'
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    name: Test job to run the custom action
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send release to Discord Webhook
+        uses: ./
+        with:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
